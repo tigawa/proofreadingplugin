@@ -1,0 +1,19 @@
+{
+    "name": "proofreading",
+    "version": "0.1",
+    "manifest_version": 2,
+    
+    "description": "選択中の文書の校正チェックを行うツールです。",
+ 
+    "permissions": [
+        "tabs", "http://*/*", "contextMenus"
+    ],
+    
+    "icons": {
+        "16": "Apply.png"
+    },
+    
+    "background": {
+        "scripts": ["background.js"]
+    }
+}

@@ -5,15 +5,28 @@
     
     "description": "選択中の文書の校正チェックを行うツールです。",
  
-    "permissions": [
-        "tabs", "http://*/*", "contextMenus"
-    ],
+ //   "permissions": [
+ //       "tabs", "http://*/*", "contextMenus"
+ //   ],
     
     "icons": {
         "16": "Apply.png"
     },
     
-    "background": {
-        "scripts": ["background.js"]
-    }
+    "content_scripts": {
+      	"matches": ["http://*/*", "https://*/*"],
+	"css": ["css/jquery-ui.css"],
+      	"js": ["contentscript.js",
+		    "js/jquery-1.9.1.js",
+       		    "js/jquery-ui.js",
+       		    "js/jquery.ui.draggable.js",
+     		    "js/jquery.ui.mouse.js",
+      		    "js/jquery.ui.position.js",
+       		    "js/jquery.ui.resizable.js",
+       		    "js/jquery.ui.widget.js"]
+    },
+    
+ //   "background": {
+ //   	"scripts": ["background.js"]
+ //   }
 }

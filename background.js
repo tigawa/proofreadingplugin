@@ -4,8 +4,14 @@ chrome.contextMenus.create({
     "contexts": ["selection"],
     "onclick": function(info) {
         var url = 'http://proofreadingchecker.herokuapp.com/sentence/check?sentence=' + encodeURIComponent(info.selectionText);
-        chrome.tabs.create({
-            url: url
-        });
+
+//	chrome.tabs.sendRequest(tab.id, param, function(response) {
+//		console.log("highlight response");
+//	});
+		
+		
+        // chrome.tabs.create({
+        //     url: url
+        // });
     }
 });

@@ -1,32 +1,30 @@
 {
-    "name": "proofreading",
+    "name": "contentsスクリプト",
     "version": "0.1",
     "manifest_version": 2,
     
     "description": "選択中の文書の校正チェックを行うツールです。",
  
- //   "permissions": [
- //       "tabs", "http://*/*", "contextMenus"
- //   ],
+    "permissions": [
+        "tabs", "<all_urls>", "contextMenus"
+    ],
     
     "icons": {
         "16": "Apply.png"
     },
     
-    "content_scripts": {
-      	"matches": ["http://*/*", "https://*/*"],
-	"css": ["css/jquery-ui.css"],
-      	"js": ["contentscript.js",
-		    "js/jquery-1.9.1.js",
-       		    "js/jquery-ui.js",
-       		    "js/jquery.ui.draggable.js",
-     		    "js/jquery.ui.mouse.js",
-      		    "js/jquery.ui.position.js",
-       		    "js/jquery.ui.resizable.js",
-       		    "js/jquery.ui.widget.js"]
-    },
+    "content_scripts": [
+    	{
+		"matches": ["<all_urls>"],
+		"css": ["css/custom-theme/jquery-ui-1.10.3.custom.css"],
+      		"js": [	"js/jquery-1.9.1.js",
+       		    	"js/jquery-ui-1.10.3.custom.min.js",
+       		    	"contentscript.js"]
+       	}
+    ],
     
- //   "background": {
- //   	"scripts": ["background.js"]
- //   }
+    "background": {
+    	"scripts": ["js/jquery-1.9.1.js",
+    		    "background.js"]
+    }
 }

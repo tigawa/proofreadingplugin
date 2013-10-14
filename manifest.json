@@ -1,5 +1,5 @@
 {
-    "name": "contentsスクリプト",
+    "name": "proofreading",
     "version": "0.1",
     "manifest_version": 2,
     
@@ -19,6 +19,7 @@
 		"css": ["css/custom-theme/jquery-ui-1.10.3.custom.css"],
       		"js": [	"js/jquery-1.9.1.js",
        		    	"js/jquery-ui-1.10.3.custom.min.js",
+       		    	"js/jquery.selection.js",
        		    	"contentscript.js"]
        	}
     ],

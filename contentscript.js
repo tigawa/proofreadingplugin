@@ -25,14 +25,15 @@ chrome.extension.onRequest.addListener(
 function showDialog(proofreading){
 	var div = document.createElement('div');
 	div.id = 'MSG_DIALOG_20131012152901111';
+	document.body.appendChild(div);
 	
 	if(proofreading.count == 0){
-		div.innerHTML = '<img src="https://dl.dropboxusercontent.com/u/36134036/images/ui/stump01-002.gif" />'
+		$('#MSG_DIALOG_20131012152901111').css('text-align','center');
+		var image_url = chrome.extension.getURL('images/stump01-002.gif');
+		$('#MSG_DIALOG_20131012152901111').html('<img src="' + image_url + '" />');
 	} else {
-		div.innerHTML = proofreading.disp_answer;
+		$('#MSG_DIALOG_20131012152901111').html(proofreading.disp_answer);
 	}
-	
-	document.body.appendChild(div);
 	
 	$('#MSG_DIALOG_20131012152901111').dialog({
 		title: proofreading.summary,
@@ -42,9 +43,11 @@ function showDialog(proofreading){
 		modal: false, // モーダルとして機能しない。
 		closeOnEscape: true, // ESCでダイアログを閉じる
 		closeText: "閉じる", //close 「×」ボタンのツールチップ。
+		show: "fold",
+		hide: "fold",
 		buttons: {  	// ダイアログに表示するボタンと処理
 			"置き換える": function(){
-				setTimeout(function(){replase(proofreading.answer)}, 10);
+				setTimeout(function(){replase(proofreading.answer)}, 5);
 				$('#MSG_DIALOG_20131012152901111').dialog("close");
 			},
 			"閉じる": function(){

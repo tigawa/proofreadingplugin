@@ -30,7 +30,7 @@ function showDialog(proofreading){
 	if(proofreading.count == 0){
 		$('#MSG_DIALOG_20131012152901111').css('text-align','center');
 		var image_url = chrome.extension.getURL('images/stump01-002.gif');
-		$('#MSG_DIALOG_20131012152901111').html('<img src="' + image_url + '" />');
+		$('#MSG_DIALOG_20131012152901111').html('<img id="stumpXXXXXXXXXX1" src="' + image_url + '" />');
 	} else {
 		$('#MSG_DIALOG_20131012152901111').html(proofreading.disp_answer);
 	}
@@ -55,7 +55,12 @@ function showDialog(proofreading){
 			}
 		},	
 		// ダイアログのイベント処理
-		open: function(event, ui) {},
+		open: function(event, ui) {
+			$('#MSG_DIALOG_20131012152901111').children("button").each(function() {
+				$("#" + this).css('outline',0);
+			});
+			 /*$('#stumpXXXXXXXXXX1').effect( 'drop', { direction : 'up' }, 1000 );*/
+			},
 		close: function() {$('#MSG_DIALOG_20131012152901111').remove();}
        	 });
        	 

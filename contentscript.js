@@ -1,3 +1,6 @@
+/**
+ *右クリックメニューから呼び出される。
+ */
 chrome.extension.onRequest.addListener(
   function(ignores, sender, sendResponse) {
 	// ダイアログを生成する。
@@ -24,33 +27,8 @@ chrome.extension.onRequest.addListener(
   }
 );
 
-function success($dialog, data){
-	$dialog.html(createImg("stump01-002.gif"));
-	$dialog.dialog({title  : data.proofreading.summary,
-					buttons: {"閉じる": function(){$dialog.dialog("close");}}});
-}
-
-function error($dialog, data){
-	$dialog.html(data.proofreading.disp_answer);
-	$dialog.css("text-align","left");
-	$dialog.dialog({title  : data.proofreading.summary,
-				    buttons: {"置き換える": function(){
-												setTimeout(function(){replase(data.proofreading.answer)}, 5);
-												$dialog.dialog("close");},
-								"閉じる": function(){ $dialog.dialog("close");}}});
-}
-
-function replase(answer){
-	$(':focus').selection('replace',{text:answer, caret:'start'});
-}
-
-function createImg(file){
-	return $("<img />",{"src": chrome.extension.getURL('images/' + file)});
-}
-
 /**
  *ダイアログを表示する。
- *@parm message ダイアログに表示するメッセージ
  */
 function createDialog(){
 	dialog = document.createElement('div');
@@ -76,3 +54,40 @@ function createDialog(){
 	
 	return dialog;
 }
+
+/**
+ *成功 -> 指摘なし
+ */
+function success($dialog, data){
+	$dialog.html(createImg("stump01-002.gif"));
+	$dialog.dialog({title  : data.proofreading.summary,
+					buttons: {"閉じる": function(){$dialog.dialog("close");}}});
+}
+
+/**
+ *失敗 -> 指摘あり
+ */
+function error($dialog, data){
+	$dialog.html(data.proofreading.disp_answer);
+	$dialog.css("text-align","left");
+	$dialog.dialog({title  : data.proofreading.summary,
+				    buttons: {"置き換える": function(){
+												setTimeout(function(){replase(data.proofreading.answer)}, 5);
+												$dialog.dialog("close");},
+								"閉じる": function(){ $dialog.dialog("close");}}});
+}
+
+/**
+ *本文を置き換える
+ */
+function replase(answer){
+	$(':focus').selection('replace',{text:answer, caret:'start'});
+}
+
+/**
+ *imageファイルを読み込む
+ */
+function createImg(file){
+	return $("<img />",{"src": chrome.extension.getURL('images/' + file)});
+}
+

@@ -1,6 +1,9 @@
 chrome.extension.onRequest.addListener(
   function(ignores, sender, sendResponse) {
-    //Ajax通信して校正チェックする。
+	// ダイアログを生成する。
+	var c = createDialog();
+  
+	//Ajax通信して校正チェックする。
 	$.ajax({
 		type: "GET",
 		// url: "http://localhost:3000/sentence/makeup.json",
@@ -9,34 +12,55 @@ chrome.extension.onRequest.addListener(
 		dataType: "json",
 		success: function(data){
 			// ダイアログを表示する。
-			showDialog(data.proofreading);
-		}
-	});
+			if(data.proofreading.count == 0){
+				success($(dialog), data);
+			} else {
+				error($(dialog), data);				
+			}
+		}});
 	
 	// レスポンスを返す。
     sendResponse({});    
   }
 );
 
+function success($dialog, data){
+	$dialog.html(createImg("stump01-002.gif"));
+	$dialog.dialog({title  : data.proofreading.summary,
+					buttons: {"閉じる": function(){$dialog.dialog("close");}}});
+}
+
+function error($dialog, data){
+	$dialog.html(data.proofreading.disp_answer);
+	$dialog.css("text-align","left");
+	$dialog.dialog({title  : data.proofreading.summary,
+				    buttons: {"置き換える": function(){
+												setTimeout(function(){replase(data.proofreading.answer)}, 5);
+												$dialog.dialog("close");},
+								"閉じる": function(){ $dialog.dialog("close");}}});
+}
+
+function replase(answer){
+	$(':focus').selection('replace',{text:answer, caret:'start'});
+}
+
+function createImg(file){
+	return $("<img />",{"src": chrome.extension.getURL('images/' + file)});
+}
+
 /**
  *ダイアログを表示する。
  *@parm message ダイアログに表示するメッセージ
  */
-function showDialog(proofreading){
-	var div = document.createElement('div');
-	div.id = 'MSG_DIALOG_20131012152901111';
-	document.body.appendChild(div);
+function createDialog(){
+	dialog = document.createElement('div');
+	dialog.style.textAlign='center';
+	dialog.style.verticalAlign='middle';
+	document.body.appendChild(dialog);
 	
-	if(proofreading.count == 0){
-		$('#MSG_DIALOG_20131012152901111').css('text-align','center');
-		var image_url = chrome.extension.getURL('images/stump01-002.gif');
-		$('#MSG_DIALOG_20131012152901111').html('<img id="stumpXXXXXXXXXX1" src="' + image_url + '" />');
-	} else {
-		$('#MSG_DIALOG_20131012152901111').html(proofreading.disp_answer);
-	}
-	
-	$('#MSG_DIALOG_20131012152901111').dialog({
-		title: proofreading.summary,
+	$(dialog).html(createImg('arrow45-001.gif'));
+	$(dialog).dialog({
+		title: "処理中",
 		autoOpen: true, // ここで起動する。
 		height: "auto",
 		minWidth: 200,
@@ -45,31 +69,10 @@ function showDialog(proofreading){
 		closeText: "閉じる", //close 「×」ボタンのツールチップ。
 		show: "fold",
 		hide: "fold",
-		buttons: {  	// ダイアログに表示するボタンと処理
-			"置き換える": function(){
-				setTimeout(function(){replase(proofreading.answer)}, 5);
-				$('#MSG_DIALOG_20131012152901111').dialog("close");
-			},
-			"閉じる": function(){
-				$('#MSG_DIALOG_20131012152901111').dialog("close");
-			}
-		},	
 		// ダイアログのイベント処理
-		open: function(event, ui) {
-			$('#MSG_DIALOG_20131012152901111').children("button").each(function() {
-				$("#" + this).css('outline',0);
-			});
-			 /*$('#stumpXXXXXXXXXX1').effect( 'drop', { direction : 'up' }, 1000 );*/
-			},
-		close: function() {$('#MSG_DIALOG_20131012152901111').remove();}
-       	 });
-       	 
-       	 //$('#MSG_DIALOG_20131012152901111').dialog("open");
-       	 //$('#MSG_DIALOG_20131012152901111').dialog("moveToTop");
+		open: function(event, ui) {},
+		close: function() {$(dialog).remove();}
+	});
+	
+	return dialog;
 }
-
-function replase(answer){
-	$(':focus').selection('replace',{text:answer, caret:'start'});
-}
-
-

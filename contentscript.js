@@ -140,7 +140,7 @@ function px_to_i(px){
 function shake($self){
 	var s = px_to_i($self.css("border-width"));
 	if(s > 0){
-		$self.hide().show('shake', { times: 3 }, 1000, function(){});
+		$self.hide().show('bounce', { times: 1 }, 500, function(){});
 		return true;
 	}	
 	return false;

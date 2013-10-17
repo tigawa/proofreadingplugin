@@ -42,6 +42,7 @@ function createDialog(){
 		autoOpen: true, // ここで起動する。
 		height: "auto",
 		minWidth: 200,
+		minHeight: 230,
 		modal: false, // モーダルとして機能しない。
 		closeOnEscape: true, // ESCでダイアログを閉じる
 		closeText: "閉じる", //close 「×」ボタンのツールチップ。
@@ -59,9 +60,13 @@ function createDialog(){
  *成功 -> 指摘なし
  */
 function success($dialog, data){
-	$dialog.html(createImg("stump01-002.gif"));
+	var $divImg = createDiv( createImg("stump01-002.gif") ).hide();
+
+	$dialog.html($divImg);
 	$dialog.dialog({title  : data.proofreading.summary,
 					buttons: {"閉じる": function(){$dialog.dialog("close");}}});
+
+	$divImg.show("bounce", { times: 3 }, 1000);
 }
 
 /**
@@ -91,3 +96,9 @@ function createImg(file){
 	return $("<img />",{"src": chrome.extension.getURL('images/' + file)});
 }
 
+/**
+ *imageファイルを読み込む
+ */
+function createDiv($innerHtml){
+	return $("<div'></div>").html($innerHtml);
+}

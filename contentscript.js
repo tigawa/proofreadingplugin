@@ -78,14 +78,17 @@ function success($dialog, data){
 function error($dialog, data){
 	$dialog.html(data.proofreading.disp_answer);
 	$dialog.css("text-align","left");
-	$dialog.dialog({title  : data.proofreading.summary,
-				    buttons: {"置き換える": function(){
-				    
-												$dialog.hide("transfer", { to: '#gt-src-wrap' }, 1000);
-				    
-												setTimeout(function(){replase(data.proofreading.answer)}, 5);
-												$dialog.dialog("close");},
-								"閉じる": function(){ $dialog.dialog("close");}}});
+	$dialog.dialog({
+		title  : data.proofreading.summary,
+		buttons: {"置き換える":
+					function(){
+						//$dialog.hide("transfer", { to: '#gt-src-wrap' }, 1000);
+						//setTimeout(function(){replase(data.proofreading.answer)}, 5);
+						$dialog.dialog("close");
+						replase(data.proofreading.answer);},
+				  "閉じる": 
+					function(){
+						$dialog.dialog("close");}}});
 }
 
 /**
@@ -93,16 +96,17 @@ function error($dialog, data){
  */
 function replase(answer){
 //	$('#gt-src-wrap').hide().show('shake', { times: 3 }, 1000, function(){$inputArea.selection('replace',{text:answer, caret:'start'})});
-
-	$inputArea.closest  ().hide().show('shake', { times: 3 }, 1000, function(){$inputArea.selection('replace',{text:answer, caret:'start'})});
+	if( shake($inputArea) == false ){
+		$inputArea.parents().each(
+			function(){
+				if( shake($(this)) ){
+					return false;
+				}
+			}
+		);
+	}
 	
-	
-	$inputArea.parents().each(function(){
-		if( $(this).css("border") ){
-			$inputArea.closest  ().hide().show('shake', { times: 3 }, 1000, function(){$inputArea.selection('replace',{text:answer, caret:'start'})});
-			return false;
-		}
-		)
+	$inputArea.selection('replace',{text:answer, caret:'start'});
 	
 //	$(':focus').css("color","red");
 	
@@ -121,3 +125,24 @@ function createImg(file){
 function createDiv($innerHtml){
 	return $("<div></div>").html($innerHtml);
 }
+
+/**
+ * pxを取り除いて数値で返す。
+ * 1px -> 1
+ */
+function px_to_i(px){
+	if(!px){
+		return 0;
+	}	
+	return Number(px.replace("px", "")); 
+}
+
+function shake($self){
+	var s = px_to_i($self.css("border-width"));
+	if(s > 0){
+		$self.hide().show('shake', { times: 3 }, 1000, function(){});
+		return true;
+	}	
+	return false;
+}
+

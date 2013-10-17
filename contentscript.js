@@ -3,8 +3,11 @@
  */
 chrome.extension.onRequest.addListener(
   function(ignores, sender, sendResponse) {
+  	$inputArea = $(':focus');
+  
+  
 	// ダイアログを生成する。
-	var c = createDialog();
+	var dialog = createDialog();
   
 	//Ajax通信して校正チェックする。
 	$.ajax({
@@ -31,7 +34,7 @@ chrome.extension.onRequest.addListener(
  *ダイアログを表示する。
  */
 function createDialog(){
-	dialog = document.createElement('div');
+	var dialog = document.createElement('div');
 	dialog.style.textAlign='center';
 	dialog.style.verticalAlign='middle';
 	document.body.appendChild(dialog);
@@ -77,6 +80,9 @@ function error($dialog, data){
 	$dialog.css("text-align","left");
 	$dialog.dialog({title  : data.proofreading.summary,
 				    buttons: {"置き換える": function(){
+				    
+												$dialog.hide("transfer", { to: '#gt-src-wrap' }, 1000);
+				    
 												setTimeout(function(){replase(data.proofreading.answer)}, 5);
 												$dialog.dialog("close");},
 								"閉じる": function(){ $dialog.dialog("close");}}});
@@ -86,7 +92,20 @@ function error($dialog, data){
  *本文を置き換える
  */
 function replase(answer){
-	$(':focus').selection('replace',{text:answer, caret:'start'});
+//	$('#gt-src-wrap').hide().show('shake', { times: 3 }, 1000, function(){$inputArea.selection('replace',{text:answer, caret:'start'})});
+
+	$inputArea.closest  ().hide().show('shake', { times: 3 }, 1000, function(){$inputArea.selection('replace',{text:answer, caret:'start'})});
+	
+	
+	$inputArea.parents().each(function(){
+		if( $(this).css("border") ){
+			$inputArea.closest  ().hide().show('shake', { times: 3 }, 1000, function(){$inputArea.selection('replace',{text:answer, caret:'start'})});
+			return false;
+		}
+		)
+	
+//	$(':focus').css("color","red");
+	
 }
 
 /**

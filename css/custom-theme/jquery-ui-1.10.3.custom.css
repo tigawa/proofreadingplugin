@@ -4,6 +4,10 @@
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Verdana%2CArial%2Csans-serif&fwDefault=normal&fsDefault=1.0em&cornerRadius=15px&bgColorHeader=%232191c0&bgTextureHeader=gloss_wave&bgImgOpacityHeader=75&borderColorHeader=%234297d7&fcHeader=%23eaf5f7&iconColorHeader=%23d8e7f3&bgColorContent=%23f4f2f2&bgTextureContent=carbon_fiber&bgImgOpacityContent=100&borderColorContent=%23a6c9e2&fcContent=%23222222&iconColorContent=%230078ae&bgColorDefault=%230078ae&bgTextureDefault=glass&bgImgOpacityDefault=45&borderColorDefault=%2377d5f7&fcDefault=%23ffffff&iconColorDefault=%23e0fdff&bgColorHover=%2379c9ec&bgTextureHover=glass&bgImgOpacityHover=75&borderColorHover=%23448dae&fcHover=%23026890&iconColorHover=%23056b93&bgColorActive=%236eac2c&bgTextureActive=gloss_wave&bgImgOpacityActive=50&borderColorActive=%23acdd4a&fcActive=%23ffffff&iconColorActive=%23f5e175&bgColorHighlight=%23f8da4e&bgTextureHighlight=glass&bgImgOpacityHighlight=55&borderColorHighlight=%23fcd113&fcHighlight=%23915608&iconColorHighlight=%23f7a50d&bgColorError=%23e14f1c&bgTextureError=gloss_wave&bgImgOpacityError=45&borderColorError=%23cd0a0a&fcError=%23ffffff&iconColorError=%23fcd113&bgColorOverlay=%23aaaaaa&bgTextureOverlay=flat&bgImgOpacityOverlay=75&opacityOverlay=30&bgColorShadow=%23999999&bgTextureShadow=flat&bgImgOpacityShadow=55&opacityShadow=45&thicknessShadow=0px&offsetTopShadow=5px&offsetLeftShadow=5px&cornerRadiusShadow=5px
 * Copyright 2013 jQuery Foundation and other contributors; Licensed MIT */
 
+*:focus{
+	outline:none;
+}
+
 /* Layout helpers
 ----------------------------------*/
 .ui-helper-hidden {

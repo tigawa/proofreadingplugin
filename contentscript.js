@@ -100,5 +100,5 @@ function createImg(file){
  *imageファイルを読み込む
  */
 function createDiv($innerHtml){
-	return $("<div'></div>").html($innerHtml);
+	return $("<div></div>").html($innerHtml);
 }

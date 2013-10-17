@@ -23,7 +23,13 @@ chrome.extension.onRequest.addListener(
 			} else {
 				error($(dialog), data);				
 			}
-		}});
+		},
+      	error: function(XMLHttpRequest, textStatus, errorThrown) {
+            $("#XMLHttpRequest").html("XMLHttpRequest : " + XMLHttpRequest.status);
+            $("#textStatus").html("textStatus : " + textStatus);
+            $("#errorThrown").html("errorThrown : " + errorThrown.message);
+        }
+   });
 	
 	// レスポンスを返す。
     sendResponse({});    

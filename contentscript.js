@@ -11,8 +11,8 @@ chrome.extension.onRequest.addListener(
   
 	//Ajax通信して校正チェックする。
 	$.ajax({
-		type: "GET",
-		// url: "http://localhost:3000/sentence/makeup.json",
+		type: "POST",
+//		url: "http://localhost:3000/sentence/makeup.json",
 		url: "http://proofreadingchecker.herokuapp.com/sentence/makeup.json",
 		data: "sentence=" + encodeURIComponent($.selection()),
 		dataType: "json",
@@ -152,3 +152,14 @@ function shake($self){
 	return false;
 }
 
+function hello(){
+	$.ajax({
+		type: "GET",
+//		url: "http://localhost:3000/hello/index.text",
+		url: "http://proofreadingchecker.herokuapp.com/hello/index.text",
+		dataType: "text"
+   });
+}
+
+/** サーバ側が停止しているので起動する */
+hello();

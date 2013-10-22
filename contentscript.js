@@ -46,6 +46,8 @@ function createDialog(){
 	document.body.appendChild(dialog);
 	
 	$(dialog).html(createImg('arrow45-001.gif'));
+	$(dialog).css('font-size','small');
+	
 	$(dialog).dialog({
 		title: "処理中",
 		autoOpen: true, // ここで起動する。
@@ -84,14 +86,15 @@ function success($dialog, data){
 function error($dialog, data){
 	$dialog.html(data.proofreading.disp_answer);
 	$dialog.css("text-align","left");
+
 	$dialog.dialog({
 		title  : data.proofreading.summary,
+		width  : $inputArea.css('width'),
 		buttons: {"置き換える":
 					function(){
-						//$dialog.hide("transfer", { to: '#gt-src-wrap' }, 1000);
-						//setTimeout(function(){replase(data.proofreading.answer)}, 5);
 						$dialog.dialog("close");
 						replase(data.proofreading.answer);},
+						
 				  "閉じる": 
 					function(){
 						$dialog.dialog("close");}}});

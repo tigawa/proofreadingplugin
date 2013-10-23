@@ -151,15 +151,3 @@ function shake($self){
 	}	
 	return false;
 }
-
-function hello(){
-	$.ajax({
-		type: "GET",
-//		url: "http://localhost:3000/hello/index.text",
-		url: "http://proofreadingchecker.herokuapp.com/hello/index.text",
-		dataType: "text"
-   });
-}
-
-/** サーバ側が停止しているので起動する */
-hello();

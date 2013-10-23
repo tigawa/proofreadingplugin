@@ -46,6 +46,8 @@ function createDialog(){
 	document.body.appendChild(dialog);
 	
 	$(dialog).html(createImg('arrow45-001.gif'));
+	$(dialog).css('font-size','small');
+	
 	$(dialog).dialog({
 		title: "処理中",
 		autoOpen: true, // ここで起動する。
@@ -69,32 +71,38 @@ function createDialog(){
  *成功 -> 指摘なし
  */
 function success($dialog, data){
-	var $divImg = createDiv( createImg("stump01-002.gif") ).hide();
-
+	var $img = createImg("stump01-002.gif");
+	var $divImg = createDiv($img);
+	
+	// 画像をロードしたらバウンドする。
+	$img.load(function(){$divImg.hide().show("bounce", { times: 3 }, 1000);})
+	
 	$dialog.html($divImg);
 	$dialog.dialog({title  : data.proofreading.summary,
 					buttons: {"閉じる": function(){$dialog.dialog("close");}}});
-
-	$divImg.show("bounce", { times: 3 }, 1000);
 }
 
 /**
  *失敗 -> 指摘あり
  */
 function error($dialog, data){
-	$dialog.html(data.proofreading.disp_answer);
+	var $contents = createDiv(data.proofreading.disp_answer);
+	$dialog.html($contents);
 	$dialog.css("text-align","left");
+
 	$dialog.dialog({
 		title  : data.proofreading.summary,
+		width  : $inputArea.css('width'),
 		buttons: {"置き換える":
 					function(){
-						//$dialog.hide("transfer", { to: '#gt-src-wrap' }, 1000);
-						//setTimeout(function(){replase(data.proofreading.answer)}, 5);
 						$dialog.dialog("close");
 						replase(data.proofreading.answer);},
+						
 				  "閉じる": 
 					function(){
 						$dialog.dialog("close");}}});
+						
+	$contents.hide().show("drop", { direction: "up" }, 1000);
 }
 
 /**
@@ -146,7 +154,8 @@ function px_to_i(px){
 function shake($self){
 	var s = px_to_i($self.css("border-width"));
 	if(s > 0){
-		$self.hide().show('bounce', { times: 1 }, 500, function(){});
+		//$self.hide().show('bounce', { times: 1 }, 500, function(){});
+		$self.hide().show("drop", { direction: "up" }, 1000);
 		return true;
 	}	
 	return false;

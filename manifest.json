@@ -10,7 +10,7 @@
     ],
     
     "icons": {
-        "16": "Apply.png"
+        "16": "images/1016_16.png"
     },
     
     "content_scripts": [

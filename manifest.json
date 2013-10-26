@@ -10,7 +10,8 @@
     ],
     
     "icons": {
-        "16": "images/1016_16.png"
+        "16": "images/1016_16.png",
+        "128": "images/1016.png"
     },
     
     "content_scripts": [
